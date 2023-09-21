@@ -34,21 +34,23 @@ const questions = [
         message: "Please enter test instructions for your project.",
         name: "projectTest",
     },
-    // {
-    //     type: "",
-    //     message: "Please select your license type.",
-    //     name: "projectLicense",
-    // },
-    // {
-    //     type: "input",
-    //     message: "What is your GitHub username?",
-    //     name: "userGitName",
-    // },
-    // {
-    //     type: "input",
-    //     message: "What is your email?",
-    //     name: "userEmail",
-    // },
+    {
+        type: "list",
+        message: "Please select your license type.",
+        name: "projectLicense",
+        choices: ["none", "GNU AGPLv3", "GNU GPLv3", "GNU LGPLv3", "Mozilla Public License 2.0", "Apache License 2.0", "MIT License", "Boost Software License 1.0", "The Unlicense"],
+        default: 0
+    },
+    {
+        type: "input",
+        message: "What is your GitHub username?",
+        name: "userGitName",
+    },
+    {
+        type: "input",
+        message: "What is your email?",
+        name: "userEmail",
+    },
 ];
 
 // TODO: Create a function to write README file
@@ -62,6 +64,13 @@ function init() {
         console.log("response", response)
         fs.writeFile("README.md", 
 `# ${response.projectTitle} 
+
+## Table of Contents
+[Description](#description)
+[Installation](#installation)
+[Usage](#usage)
+[Contributing](#contributing)
+[Tests](#tests)
 
 ## Description
 ${response.projectDescription}
