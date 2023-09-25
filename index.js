@@ -38,7 +38,17 @@ const questions = [
         type: "list",
         message: "Please select your license type.",
         name: "projectLicense",
-        choices: ["none", "GNU AGPLv3", "GNU GPLv3", "GNU LGPLv3", "Mozilla Public License 2.0", "Apache License 2.0", "MIT License", "Boost Software License 1.0", "The Unlicense"],
+        choices: [
+            "none", 
+            "GNU AGPLv3", 
+            "GNU GPLv3", 
+            "GNU LGPLv3", 
+            "Mozilla Public License 2.0", 
+            "Apache License 2.0", 
+            "MIT License", 
+            "Boost Software License 1.0", 
+            "The Unlicense"
+        ],
         default: 0
     },
     {
@@ -54,38 +64,49 @@ const questions = [
 ];
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+const writeToFile = ({projectTitle, projectDescription, projectContri, projectInstall, projectLicense, projectTest, projectUsage, userGitName}) => 
+`# ${projectTitle} 
+
+## Table of Contents
+[Description](#description)
+[Installation](#installation)
+[Usage](#usage)
+[License](#license)
+[Contributing](#contributing)
+[Tests](#tests)
+[Questions](#questions)
+
+## Description
+${projectDescription}
+
+## Installation
+${projectInstall}
+
+## Usage
+${projectUsage}
+
+## License
+This project is covered under the following license:
+
+${projectLicense}
+
+## Contributing
+${projectContri}
+
+## Tests
+${projectTest}
+
+## Questions
+[GitHub Profile](https://github.com/${userGitName})`
 
 // TODO: Create a function to initialize app
 function init() {
     inquirer
     .prompt(questions)
     .then ((response) => {
-        console.log("response", response)
-        fs.writeFile("README.md", 
-`# ${response.projectTitle} 
+        const readMePageContent = writeToFile(response)
 
-## Table of Contents
-[Description](#description)
-[Installation](#installation)
-[Usage](#usage)
-[Contributing](#contributing)
-[Tests](#tests)
-
-## Description
-${response.projectDescription}
-
-## Installation
-${response.projectInstall}
-
-## Usage
-${response.projectUsage}
-
-## Contributing
-${response.projectContri}
-
-## Tests
-${response.projectTest}`, 
+        fs.writeFile("README.md", readMePageContent , 
             (err) => 
             err ? console.log(err) : console.log("ReadMe Created."))
     })
